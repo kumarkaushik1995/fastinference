@@ -167,3 +167,15 @@ def intrinsic_attention(x:TextLearner, text:str, class_id:int=None, **kwargs):
     if isinstance(x, LMLearner): raise Exception("Language models are not supported")
     text, attn = _intrinsic_attention(x, text, class_id)
     return _show_piece_attn(text.split(), to_np(attn), **kwargs)
+
+def _html_piece_attn(*args, **kwargs):
+    from IPython.display import display, HTML
+    return HTML(_piece_attn_html(*args, **kwargs))
+
+# Cell
+@patch
+def text_attention(x:TextLearner, text:str, class_id:int=None, **kwargs):
+    "Shows the `intrinsic attention for `text`, optional `class_id`"
+    if isinstance(x, LMLearner): raise Exception("Language models are not supported")
+    text, attn = _intrinsic_attention(x, text, class_id)
+    return text, attn, _html_piece_attn(text.split(), to_np(attn), **kwargs)
