@@ -178,4 +178,4 @@ def text_attention(x:TextLearner, text:str, class_id:int=None, **kwargs):
     "Shows the `intrinsic attention for `text`, optional `class_id`"
     if isinstance(x, LMLearner): raise Exception("Language models are not supported")
     text, attn = _intrinsic_attention(x, text, class_id)
-    return text, attn, _html_piece_attn(text.split(), to_np(attn), **kwargs)
+    return text.split(), to_np(attn), _html_piece_attn(text.split(), to_np(attn), **kwargs)
